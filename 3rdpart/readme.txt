@@ -1,8 +1,8 @@
 
-3rdpartÄ¿Â¼ÀïÊÇµÚÈý·½×é¼þ:
+3rdpartç›®å½•é‡Œæ˜¯ç¬¬ä¸‰æ–¹ç»„ä»¶:
 
-CxImage ÊÇÔ­°æµÄCxImage, ÎÒÃÇÖ»°ÑÓÃµÄ¹¦ÄÜ¼Óµ½¹¤³ÌÀï.
-Quantize.* ÊÇ°ÑÕæ²ÊÉ«×ª³É256É«µÄÁ¿»¯¹¤¾ß.
-simplexnoise1234.* ÊÇÔëÉù·¢ÉúÆ÷, ÓÃÀ´Éú³ÉÆåÅÌ/Æå×ÓÎÆÀí.
+CxImage æ˜¯åŽŸç‰ˆçš„CxImage, æˆ‘ä»¬åªæŠŠç”¨çš„åŠŸèƒ½åŠ åˆ°å·¥ç¨‹é‡Œ.
+Quantize.* æ˜¯æŠŠçœŸå½©è‰²è½¬æˆ256è‰²çš„é‡åŒ–å·¥å…·.
+simplexnoise1234.* æ˜¯å™ªå£°å‘ç”Ÿå™¨, ç”¨æ¥ç”Ÿæˆæ£‹ç›˜/æ£‹å­çº¹ç†.
 	
 	

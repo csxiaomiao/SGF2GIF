@@ -1,4 +1,4 @@
-﻿// SimplexNoise1234
+// SimplexNoise1234
 // Copyright ?2003-2011, Stefan Gustavson
 //
 // Contact: stegu@itn.liu.se
