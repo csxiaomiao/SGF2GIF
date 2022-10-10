@@ -6,7 +6,7 @@
 using namespace Gdiplus;
 using namespace std;
 
-const int MARGIN = 4; // ±ß¾à, ·ÀÖ¹ÄÚÈİ½ôÌù×ÅÍ¼Æ¬±ß½ç
+const int MARGIN = 4; // è¾¹è·, é˜²æ­¢å†…å®¹ç´§è´´ç€å›¾ç‰‡è¾¹ç•Œ
 const int TITLE_HEIGHT = 20; 
 const int LEFT_SPACE_WIDTH = 0;
 
@@ -16,23 +16,23 @@ const int MAX_MOVE = MAX_BOARD_SIZE * MAX_BOARD_SIZE * 4; // ugly, but works
 const int BOARD_LEFT = LEFT_SPACE_WIDTH + MARGIN;
 const int BOARD_TOP = TITLE_HEIGHT + MARGIN;
 
-// Ñ¡Ïî¶Ô»°¿òÀïµÄÄÚÈİ, ×î¿ªÊ¼µÄÊ±ºòÖ»Ğè¼Ç¼òµ¥µÄĞÅÏ¢, ÏÖÔÚÒª¼ÇµÃ¶«Î÷¶àÁË, ÒÑ¾­ÓĞµã²»ÊÊÓÃ.
+// é€‰é¡¹å¯¹è¯æ¡†é‡Œçš„å†…å®¹, æœ€å¼€å§‹çš„æ—¶å€™åªéœ€è®°ç®€å•çš„ä¿¡æ¯, ç°åœ¨è¦è®°å¾—ä¸œè¥¿å¤šäº†, å·²ç»æœ‰ç‚¹ä¸é€‚ç”¨.
 struct Options
 {
-	int delay; // ÑÓ³Ù, ¼´²¥·ÅËÙ¶È
-	int numbers; // ×îºóµÄ¶àÉÙÊÖÆåÏÔÊ¾ÊÖÊı
-	bool splitPeriodically; // ÊÇ·ñ·Ö¸î
-	int splitCount; // ·Ö¸îµãµÄ¸öÊı
-	int splitPoints[20]; // ·Ö¸îµã
-	int cw; // cell width, Æå×Ó³ß´ç
+	int delay; // å»¶è¿Ÿ, å³æ’­æ”¾é€Ÿåº¦
+	int numbers; // æœ€åçš„å¤šå°‘æ‰‹æ£‹æ˜¾ç¤ºæ‰‹æ•°
+	bool splitPeriodically; // æ˜¯å¦åˆ†å‰²
+	int splitCount; // åˆ†å‰²ç‚¹çš„ä¸ªæ•°
+	int splitPoints[20]; // åˆ†å‰²ç‚¹
+	int cw; // cell width, æ£‹å­å°ºå¯¸
 
-	// ÊÇ·ñÕæµÄÒª·Ö¸îÍ¼Æ¬
+	// æ˜¯å¦çœŸçš„è¦åˆ†å‰²å›¾ç‰‡
 	bool RealSplit()
 	{
 		return splitPeriodically || splitCount > 0;
 	}
 
-	// ÑÓ³Ù×ªÎª×Ö·û´®
+	// å»¶è¿Ÿè½¬ä¸ºå­—ç¬¦ä¸²
 	string GetDelayString()
 	{
 		char buf[32];
@@ -185,7 +185,7 @@ enum StoneColor
 	White = 2,
 };
 
-// ÆåÅÌÉÏµÄ½»²æµã
+// æ£‹ç›˜ä¸Šçš„äº¤å‰ç‚¹
 struct Cross
 {
 	char x;
@@ -194,7 +194,7 @@ struct Cross
 
 struct Move : public Cross 
 {
-	bool addition; // ÊÇ·ñ×ù×Ó
+	bool addition; // æ˜¯å¦åº§å­
 	StoneColor color;
 	Move()
 	{
@@ -207,7 +207,7 @@ struct Move : public Cross
 
 struct Game
 {
-	// ÆåÆ×ÀàĞÍ, ²Î¼ûSFG¹ÙÍøµÄ¶¨Òå, GM[x]. ÎÒÃÇÖ»Ö§³ÖÎå×ÓÆåºÍÎ§Æå
+	// æ£‹è°±ç±»å‹, å‚è§SFGå®˜ç½‘çš„å®šä¹‰, GM[x]. æˆ‘ä»¬åªæ”¯æŒäº”å­æ£‹å’Œå›´æ£‹
 	enum GameType
 	{
 		gameUnkown = 0,
@@ -218,10 +218,10 @@ struct Game
 
 	int boardSize;
 	StoneColor winner;
-	bool winByResign; // ÖĞÅÌÊ¤, +R
+	bool winByResign; // ä¸­ç›˜èƒœ, +R
 	
-	string komi; // ÌùÄ¿, ÓÃ´¦²»´ó
-	string result; // ¶ÔŞÄ½á¹û, ÎÄ±¾
+	string komi; // è´´ç›®, ç”¨å¤„ä¸å¤§
+	string result; // å¯¹å¼ˆç»“æœ, æ–‡æœ¬
 	
 	string whiteName;
 	string whiteRank;
@@ -229,7 +229,7 @@ struct Game
 	string blackName;
 	string blackRank;
 
-	int moveCount; // µ±Ç°µÄ²½Êı
+	int moveCount; // å½“å‰çš„æ­¥æ•°
 	Move moves[MAX_MOVE]; 
 
 	Game()
@@ -250,10 +250,10 @@ struct Game
 		string ret;
 		if(!whiteName.empty() || !blackName.empty())
 		{
-			ret +=  whiteName.empty() ? "°×: Î´Öª" : "°×: " +whiteName;
+			ret +=  whiteName.empty() ? "ç™½: æœªçŸ¥" : "ç™½: " +whiteName;
 			ret += whiteRank.empty() ? "" : " " + whiteRank + "";
 			ret += " - ";
-			ret += blackName.empty() ? "ºÚ: Î´Öª" : "ºÚ: " + blackName;
+			ret += blackName.empty() ? "é»‘: æœªçŸ¥" : "é»‘: " + blackName;
 			ret += blackRank.empty() ? "" : " " + blackRank + "";
 			ret += "  ";
 		}
@@ -263,22 +263,22 @@ struct Game
 		{
 			if(winner == White)
 			{
-				ret+= "°×ÖĞÅÌÊ¤";
+				ret+= "ç™½ä¸­ç›˜èƒœ";
 			}
 			else if(winner == Black)
 			{
-				ret+= "ºÚÖĞÅÌÊ¤";
+				ret+= "é»‘ä¸­ç›˜èƒœ";
 			}
 		}
 		else
 		{
 			if(winner == White)
 			{
-				ret+= "°×Ê¤";
+				ret+= "ç™½èƒœ";
 			}
 			else if(winner == Black)
 			{
-				ret+= "ºÚÊ¤";
+				ret+= "é»‘èƒœ";
 			}
 
 			if(!result.empty())
@@ -289,7 +289,7 @@ struct Game
 
 		//if(!komi.empty())
 		//{
-		//	ret+= " ÌùÄ¿: " + komi;
+		//	ret+= " è´´ç›®: " + komi;
 		//}
 		return ret;
 	}
@@ -331,7 +331,7 @@ string ReadFileIntoString(const string & srcPath)
 	return ret;
 }
 
-// ½âÊÍÂä×Ó×ø±ê, SGFÀïÓÃµÄÊÇ×ÖÄ¸
+// è§£é‡Šè½å­åæ ‡, SGFé‡Œç”¨çš„æ˜¯å­—æ¯
 bool ReadMove(const string & src, int & i, Move & m)
 {
 	while(i < src.size() && src[i] <= 32)
@@ -364,8 +364,8 @@ bool ReadMove(const string & src, int & i, Move & m)
 	return false;
 }
 
-// ¶Á×Ö·û´®, ²Î¼ûSGF¹Ù·½¶¨Òå
-// Õâ¸öº¯Êı´ó¸ÅÓĞÎÊÌâ, ÖÁÉÙÊÇÃ»ÓĞ´¦ÀíUTF,BIG5µÈ¸÷ÖÖ±àÂë
+// è¯»å­—ç¬¦ä¸², å‚è§SGFå®˜æ–¹å®šä¹‰
+// è¿™ä¸ªå‡½æ•°å¤§æ¦‚æœ‰é—®é¢˜, è‡³å°‘æ˜¯æ²¡æœ‰å¤„ç†UTF,BIG5ç­‰å„ç§ç¼–ç 
 string ReadStringValue(const string & src, int & i)
 {
 	string ret;
@@ -405,25 +405,25 @@ string ReadStringValue(const string & src, int & i)
 	return ret;
 }
 
-// ½âÊÍSGF¸ñÊ½. 
-// (ÎªÉ¶²»ÓÃµÚÈı·½¿â? ÒòÎªÎÒ²»»áÓÃ.)
+// è§£é‡ŠSGFæ ¼å¼. 
+// (ä¸ºå•¥ä¸ç”¨ç¬¬ä¸‰æ–¹åº“? å› ä¸ºæˆ‘ä¸ä¼šç”¨.)
 bool LoadSimpleSGF(Game & game, const string & srcPath)
 {
 	bool bReadSize = false;
-	// ÔİÊ±°Ñ×ù×ÓÒ²ËãÔÚMoveÀï
+	// æš‚æ—¶æŠŠåº§å­ä¹Ÿç®—åœ¨Moveé‡Œ
 	string src = ReadFileIntoString(srcPath);
 	if(src.empty())
 	{
 		return false;
 	}
 	int i = 0;
-	// Ìø¹ı (;
+	// è·³è¿‡ (;
 	while(i < src.size() && ( src[i] <= 32 || src[i] == '(' || src[i] == ';'))
 	{
 		i++;
 	}
 
-	// ÒÀ´Î¶Á±êÖ¾, Ö±µ½Óöµ½ÓÒÀ¨ºÅ
+	// ä¾æ¬¡è¯»æ ‡å¿—, ç›´åˆ°é‡åˆ°å³æ‹¬å·
 	while(i < src.size() && src[i] != ')')
 	{
 		while(i < src.size() && (src[i] <= 32 || src[i] == ';' || src[i] == '('))
@@ -440,7 +440,7 @@ bool LoadSimpleSGF(Game & game, const string & srcPath)
 
 		if(propName == "GM")
 		{
-			// ÆåÖÖ, ÆåÆ×ÀàĞÍ
+			// æ£‹ç§, æ£‹è°±ç±»å‹
 			string s = ReadStringValue(src, i);
 			int t = s.empty() ? 1 : atoi(s.c_str());
 			if(t == 4)
@@ -483,7 +483,7 @@ bool LoadSimpleSGF(Game & game, const string & srcPath)
 		}
 		else if(propName == "AB" || propName == "AW" || propName == "B" || propName == "W")
 		{
-			// ×ù×Ó/Âä×Ó×ø±ê
+			// åº§å­/è½å­åæ ‡
 			Move m;
 			m.color = propName == "AB"  || propName == "B" ? Black : White;
 			m.addition = propName == "AB" || propName == "AW" ? true : false;
@@ -494,7 +494,7 @@ bool LoadSimpleSGF(Game & game, const string & srcPath)
 		}
 		else if(propName == "SZ")
 		{
-			// ÆåÅÌ´óĞ¡. Î§ÆåÒ»°ãÊÇ19/13/9, Îå×ÓÆå15. µ«Ò²ÓĞÀıÍâ
+			// æ£‹ç›˜å¤§å°. å›´æ£‹ä¸€èˆ¬æ˜¯19/13/9, äº”å­æ£‹15. ä½†ä¹Ÿæœ‰ä¾‹å¤–
 			bReadSize = true;
 			string s = ReadStringValue(src, i);
 			if(!s.empty())
@@ -509,37 +509,37 @@ bool LoadSimpleSGF(Game & game, const string & srcPath)
 		}
 		else if(propName == "PB")
 		{
-			// ºÚ·½ÆåÊÖ
+			// é»‘æ–¹æ£‹æ‰‹
 			game.blackName = ReadStringValue(src, i);
 		}
 		else if(propName == "PW")
 		{
-			// °×·½ÆåÊÖ
+			// ç™½æ–¹æ£‹æ‰‹
 			game.whiteName = ReadStringValue(src, i);
 		}
 		else if(propName == "BR")
 		{
-			// ºÚ·½¶ÎÎ»
+			// é»‘æ–¹æ®µä½
 			game.blackRank = ReadStringValue(src, i);
 		}
 		else if(propName == "WR")
 		{
-			// °×·½¶ÎÎ»
+			// ç™½æ–¹æ®µä½
 			game.whiteRank = ReadStringValue(src, i);
 		}
 		else if(propName == "KM")
 		{
-			// ÌùÄ¿
+			// è´´ç›®
 			game.komi = ReadStringValue(src, i);
 		}
 		else if(propName == "RE")
 		{
-			// ¶Ô¾Ö½á¹û
-			// [B+R]     ºÚÖĞÅÌÊ¤
-			// [W+R]     °×ÖĞÅÌÊ¤
-			// [B+0.5]   ºÚÊ¤0.5Ä¿
-			// [W+100]   °×Ê¤100Ä¿
-			// [ÆäËû]    ÆäËû½á¹û, ÀıÈç"´ò¹Ò", "ÎŞÊ¤¸º"µÈ
+			// å¯¹å±€ç»“æœ
+			// [B+R]     é»‘ä¸­ç›˜èƒœ
+			// [W+R]     ç™½ä¸­ç›˜èƒœ
+			// [B+0.5]   é»‘èƒœ0.5ç›®
+			// [W+100]   ç™½èƒœ100ç›®
+			// [å…¶ä»–]    å…¶ä»–ç»“æœ, ä¾‹å¦‚"æ‰“æŒ‚", "æ— èƒœè´Ÿ"ç­‰
 			string re =  ReadStringValue(src, i);
 			if(re.size() >= 2 && re[1] == '+')
 			{
@@ -572,13 +572,13 @@ bool LoadSimpleSGF(Game & game, const string & srcPath)
 		}
 		else if(propName == "C")
 		{
-			// ×¢½â, ×¢ÊÍ, ±¸×¢
+			// æ³¨è§£, æ³¨é‡Š, å¤‡æ³¨
 			string comment = ReadStringValue(src, i);
 			printf("comment at move %d: \n%s\n", game.moveCount, comment.c_str());
 		}
 		else
 		{
-			// ÆäËûÊôĞÔÖ±½ÓºöÂÔ, ÀıÈçÈı½Ç·ûºÅ, A,B,C,DµÈ·ÖÖ§±êÊ¶µÈ, ÕâĞ©¶«Î÷Ì«·ÑÊÂÁË.
+			// å…¶ä»–å±æ€§ç›´æ¥å¿½ç•¥, ä¾‹å¦‚ä¸‰è§’ç¬¦å·, A,B,C,Dç­‰åˆ†æ”¯æ ‡è¯†ç­‰, è¿™äº›ä¸œè¥¿å¤ªè´¹äº‹äº†.
 			printf("Ignore property : %s\n", propName.c_str());
 			while(i < src.size() && src[i] != ']')
 			{
@@ -592,7 +592,7 @@ bool LoadSimpleSGF(Game & game, const string & srcPath)
 }
 
 
-// ÖÖ×ÓÌî³äËã·¨, ÊıÆø, ´Ëº¯Êı²»ÊÇÌØ±ğÂı, Ã»±ØÒªÓÅ»¯
+// ç§å­å¡«å……ç®—æ³•, æ•°æ°”, æ­¤å‡½æ•°ä¸æ˜¯ç‰¹åˆ«æ…¢, æ²¡å¿…è¦ä¼˜åŒ–
 bool HasLiberty(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], bool flags[MAX_BOARD_SIZE][MAX_BOARD_SIZE], int x, int y)
 {
 	flags[x][y] = true;
@@ -657,7 +657,7 @@ bool HasLiberty(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], bool f
 }
 
 
-// ¼ì²âÊÇ·ñĞèÒªÌá×Ó
+// æ£€æµ‹æ˜¯å¦éœ€è¦æå­
 void CheckTakeStone(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], int x, int y)
 {
 	bool flags[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
@@ -671,15 +671,15 @@ void CheckTakeStone(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], in
 			{
 				if(flags[i][j])
 				{
-					assert(board[i][j] == c); // Ô­±¾µÄÑÕÉ«Ò»¶¨ºÍ¼ì²âµãµÄÏàÍ¬, ÒòÎªÊÇÍ¬Ò»¿éÆå
-					board[i][j] = None; // Ìá×Ó
+					assert(board[i][j] == c); // åŸæœ¬çš„é¢œè‰²ä¸€å®šå’Œæ£€æµ‹ç‚¹çš„ç›¸åŒ, å› ä¸ºæ˜¯åŒä¸€å—æ£‹
+					board[i][j] = None; // æå­
 				}
 			}
 		}
 	}
 }
 
-// Îå×ÓÆåÂä×Óº¯Êı, ²»ĞèÒªÌá×Ó
+// äº”å­æ£‹è½å­å‡½æ•°, ä¸éœ€è¦æå­
 bool PutStoneRenju(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], const Move & m)
 {
 	if(m.color == None)
@@ -697,7 +697,7 @@ bool PutStoneRenju(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], con
 	return true;
 }
 
-// Î§ÆåÂä×Óº¯Êı, ĞèÒª¼ì²âÌá×Ó
+// å›´æ£‹è½å­å‡½æ•°, éœ€è¦æ£€æµ‹æå­
 bool PutStoneWeiqi(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], const Move & m)
 {
 	if(m.color == None)
@@ -713,7 +713,7 @@ bool PutStoneWeiqi(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], con
 
 	board[m.x][m.y] = m.color;
 
-	// ËÄ¸ö·½ÏòµÄÆå¶¼ĞèÒª¼ì²âÊÇ·ñÆø¾¡
+	// å››ä¸ªæ–¹å‘çš„æ£‹éƒ½éœ€è¦æ£€æµ‹æ˜¯å¦æ°”å°½
 	if(m.x < (BS-1) && m.color != board[m.x+1][m.y])
 	{
 		CheckTakeStone(BS, board, m.x + 1, m.y);
@@ -734,7 +734,7 @@ bool PutStoneWeiqi(int BS, StoneColor board[MAX_BOARD_SIZE][MAX_BOARD_SIZE], con
 		CheckTakeStone(BS,board, m.x, m.y-1);
 	}
 
-	// °´Ä¿Ç°µÄ¹æÔòËÆºõ²»ĞèÒª¼ì²â×ÔÌá
+	// æŒ‰ç›®å‰çš„è§„åˆ™ä¼¼ä¹ä¸éœ€è¦æ£€æµ‹è‡ªæ
 
 	return true;
 }
@@ -815,8 +815,8 @@ bool IsStar(int bs, int x, int y)
 	}
 }
 
-// »­¸ñ×Ó, ÓĞÆå×Ó»­Æå×Ó, Ã»ÓĞÆå×Ó»­¿Õ½»²æµã.
-// ×¢ÒâÍ¼Æ¬ÊÇ²»Í¸Ã÷µÄ, Ô­ÏÈÓĞÆå×ÓµÄµØ·½±»¿Õ½»²æµã¸²¸Ç¾ÍÊÇÌá×ÓµÄĞ§¹û
+// ç”»æ ¼å­, æœ‰æ£‹å­ç”»æ£‹å­, æ²¡æœ‰æ£‹å­ç”»ç©ºäº¤å‰ç‚¹.
+// æ³¨æ„å›¾ç‰‡æ˜¯ä¸é€æ˜çš„, åŸå…ˆæœ‰æ£‹å­çš„åœ°æ–¹è¢«ç©ºäº¤å‰ç‚¹è¦†ç›–å°±æ˜¯æå­çš„æ•ˆæœ
 void DrawCell(HDC hDC,  int BS, StoneColor color, int i, int j, int x0, int y0, int num = 0)
 {
 	Graphics * g = Graphics::FromHDC(hDC);
@@ -824,7 +824,7 @@ void DrawCell(HDC hDC,  int BS, StoneColor color, int i, int j, int x0, int y0, 
 	g->SetPageUnit( Gdiplus::UnitPixel );
 	if(color == White || color == Black)
 	{
-		// »­Æå×Ó
+		// ç”»æ£‹å­
 		if(color == White)
 		{
 			::SelectObject(hDC, ::GetStockObject(WHITE_BRUSH));
@@ -844,7 +844,7 @@ void DrawCell(HDC hDC,  int BS, StoneColor color, int i, int j, int x0, int y0, 
 
 		if(num > 0)
 		{
-			// »­ÊÖÊı
+			// ç”»æ‰‹æ•°
 			char buf[100];
 			sprintf(buf, "%d", num);
 			RECT rect = {x0+1, y0, x0 + CW(), y0 + CW()};
@@ -853,7 +853,7 @@ void DrawCell(HDC hDC,  int BS, StoneColor color, int i, int j, int x0, int y0, 
 	}
 	else
 	{
-		// »­¿Õ½»²æµã
+		// ç”»ç©ºäº¤å‰ç‚¹
 		int cx = x0 + CW() / 2;
 		int cy = y0 + CW() / 2;
 		int l, t, r, b;
@@ -868,7 +868,7 @@ void DrawCell(HDC hDC,  int BS, StoneColor color, int i, int j, int x0, int y0, 
 
 		if(IsStar(BS, i, j))
 		{
-			// »­ĞÇÎ»±ê¼Ç
+			// ç”»æ˜Ÿä½æ ‡è®°
 			::SelectObject(hDC, ::GetStockObject(BLACK_BRUSH));
 			::Rectangle(hDC, cx-1, cy-1 , cx+2, cy+2);
 		}
@@ -883,7 +883,7 @@ float frand()
 	return float(rand()) / float(RAND_MAX);
 }
 
-// ÆåÅÌµ×ÎÆÊÇ¹ı³ÌÎÆÀí, ÔÚGIFÀïºáÏòÎÆÀíÑ¹ËõÂÊ¸ß
+// æ£‹ç›˜åº•çº¹æ˜¯è¿‡ç¨‹çº¹ç†, åœ¨GIFé‡Œæ¨ªå‘çº¹ç†å‹ç¼©ç‡é«˜
 void DrawBoardBG(HDC hDC, RECT rect)
 {
 	float x0 = frand();
@@ -917,7 +917,7 @@ void DrawBoardBG(HDC hDC, RECT rect)
 }
 
 
-// °Ñ´ÓfirstNumµ½lastNumµÄ×Å·¨×ª»»³ÉÒ»¸öGIF
+// æŠŠä»firstNumåˆ°lastNumçš„ç€æ³•è½¬æ¢æˆä¸€ä¸ªGIF
 bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 {
 	int BS = game.boardSize;
@@ -937,20 +937,20 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 	::SetTextColor(hDC, RGB(0, 0, 0));
 	::SetBkMode(hDC, TRANSPARENT);
 
-	// µ¥¸ö¸ñ×Ó´óĞ¡µÄÎ»Í¼, ÀïÃæµÄÄÚÈİÊÇËæ»­ËæÓÃ
+	// å•ä¸ªæ ¼å­å¤§å°çš„ä½å›¾, é‡Œé¢çš„å†…å®¹æ˜¯éšç”»éšç”¨
 	HBITMAP hBmpCell = ::CreateBitmap(CW(), CW(), 1, 32, NULL);
 
-	// ÆåÅÌÎ»Í¼
+	// æ£‹ç›˜ä½å›¾
 	HBITMAP hBmpBoard = ::CreateBitmap(BW(BS), BH(BS), 1, 32, NULL);
 
-	// ÏÈ°ÑÆåÅÌÎ»Í¼Ñ¡ÈëhDC, ÔÚÎ»Í¼ÉÏ»°¶«Î÷
+	// å…ˆæŠŠæ£‹ç›˜ä½å›¾é€‰å…¥hDC, åœ¨ä½å›¾ä¸Šè¯ä¸œè¥¿
 	HBITMAP hOldBmp = (HBITMAP)::SelectObject(hDC, hBmpBoard);
 
-	// »­µ×ÎÆ
+	// ç”»åº•çº¹
 	RECT rect= { 0, 0, BW(BS), BH(BS) };
 	DrawBoardBG(hDC, rect);
 
-	// »­±êÌâ, ±êÌâÒ»Ö±²»±ä, »­ÔÚµ×Í¼ÉÏ¾ÍĞĞ
+	// ç”»æ ‡é¢˜, æ ‡é¢˜ä¸€ç›´ä¸å˜, ç”»åœ¨åº•å›¾ä¸Šå°±è¡Œ
 	string title = game.GetTitle();
 	::SelectObject(hDC, hTitleFont);
 	rect.bottom = BOARD_TOP;
@@ -958,7 +958,7 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 
 	for(int i=0; i< BS; i++)
 	{
-		// »­×ø±ê
+		// ç”»åæ ‡
 		char buf[32];
 
 		rect.left = BOARD_LEFT + CW() * BS + 4;
@@ -984,10 +984,10 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 
 
 
-	// µ½ÁËÕâÀï, ÒÑ¾­»­ÁËÆåÅÌµ×ÎÆ, ±êÌâºÍ×ø±ê, ½ÓÏÂÀ´¸Ã»­¸÷½»²æµã¼°Æå×ÓÁË.
-	// ÔÚ»­Ö®Ç°ÏÈ°Ñ×ù×Ó°ÚºÃ.
+	// åˆ°äº†è¿™é‡Œ, å·²ç»ç”»äº†æ£‹ç›˜åº•çº¹, æ ‡é¢˜å’Œåæ ‡, æ¥ä¸‹æ¥è¯¥ç”»å„äº¤å‰ç‚¹åŠæ£‹å­äº†.
+	// åœ¨ç”»ä¹‹å‰å…ˆæŠŠåº§å­æ‘†å¥½.
 
-	// °Ú×ù×Ó
+	// æ‘†åº§å­
 	int n;
 	for(n = 0; n < game.moveCount && game.moves[n].addition; n++)
 	{
@@ -995,32 +995,32 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 		board[m.x][m.y] = m.color;
 	}
 
-	// µÚÒ»¸ö·Ç×ù×ÓÊÇÊµ¼ÊÆåÆ×µÄÆğµã, µ«ÎÒÃÇ²»Ò»¶¨´ÓÆğµã¿ªÊ¼×ö¶¯»­, ¼ûÏÂÃæµÄËµÃ÷
+	// ç¬¬ä¸€ä¸ªéåº§å­æ˜¯å®é™…æ£‹è°±çš„èµ·ç‚¹, ä½†æˆ‘ä»¬ä¸ä¸€å®šä»èµ·ç‚¹å¼€å§‹åšåŠ¨ç”», è§ä¸‹é¢çš„è¯´æ˜
 	int firstMoveIndex = n;
 
 	int num = 0;
 	vector<int> num_to_index;
 
-	// ÊÖÊıÓ³Éä, ÒòÎªÖĞ¼ä¿ÉÄÜÓĞpassºÍ¶àÓàÆå×Ó, ËùÒÔ¿ÉÄÜ²»ÊÇÏßĞÔÓ³Éä.
+	// æ‰‹æ•°æ˜ å°„, å› ä¸ºä¸­é—´å¯èƒ½æœ‰passå’Œå¤šä½™æ£‹å­, æ‰€ä»¥å¯èƒ½ä¸æ˜¯çº¿æ€§æ˜ å°„.
 	num_to_index.push_back(-1); 
 
-	// °ÑfirstNumÖ®Ç°µÄ×Å·¨¶¼ÊÓÎª×ù×Ó, µ«ÊÇÊÖÊıÒªÔö¼Ó.
-	// ÓĞÁËÕâ¸ö´¦Àí, ÎÒÃÇ¾Í¿ÉÒÔ´ÓÈÎÒâÊÖÊı¿ªÊ¼×ö¶¯»­. ÎŞĞè´ÓÍ·¿ªÊ¼.
+	// æŠŠfirstNumä¹‹å‰çš„ç€æ³•éƒ½è§†ä¸ºåº§å­, ä½†æ˜¯æ‰‹æ•°è¦å¢åŠ .
+	// æœ‰äº†è¿™ä¸ªå¤„ç†, æˆ‘ä»¬å°±å¯ä»¥ä»ä»»æ„æ‰‹æ•°å¼€å§‹åšåŠ¨ç”». æ— éœ€ä»å¤´å¼€å§‹.
 	for(n=firstMoveIndex; n<game.moveCount && num+1 < firstNum; n++)
 	{
 		Move & m = game.moves[n];
-		m.addition = false; // °Ñ¶Ô¾Ö¹ı³ÌÖĞµÄ¶àÓàÆå×Ó¶¼µ±×÷Êµ¼ÊµÄÂä×Ó. ÓĞÊ±ºòÊÇÓĞÕâÖÖ¼ÓÆå×Ó°Ú±ä»¯µÄÆåÆ×, µ«ÎÒÃÇÃ»±ØÒªÖ§³Ö.
+		m.addition = false; // æŠŠå¯¹å±€è¿‡ç¨‹ä¸­çš„å¤šä½™æ£‹å­éƒ½å½“ä½œå®é™…çš„è½å­. æœ‰æ—¶å€™æ˜¯æœ‰è¿™ç§åŠ æ£‹å­æ‘†å˜åŒ–çš„æ£‹è°±, ä½†æˆ‘ä»¬æ²¡å¿…è¦æ”¯æŒ.
 		bool put = PutStone(game.gameType, BS, board, m);
-		if(put && !m.addition) // Ö»ÓĞÂä×Ó³É¹¦²Å¼ÆËãÊÖÊı, Âäµ½ÆåÅÌÍâµÈÇé¿ö¶¼ÈÏÎªÊÇPASS
+		if(put && !m.addition) // åªæœ‰è½å­æˆåŠŸæ‰è®¡ç®—æ‰‹æ•°, è½åˆ°æ£‹ç›˜å¤–ç­‰æƒ…å†µéƒ½è®¤ä¸ºæ˜¯PASS
 		{
 			num++;
 			num_to_index.push_back(n);
 		}
 	}
 
-	firstMoveIndex = n; // firstNum ¶ÔÓ¦µÄÎ»ÖÃ, ÊıÖµ¿ÉÄÜºÍfirstNum²»Í¬, ÒòÎªÓĞ×ù×ÓºÍPASS
+	firstMoveIndex = n; // firstNum å¯¹åº”çš„ä½ç½®, æ•°å€¼å¯èƒ½å’ŒfirstNumä¸åŒ, å› ä¸ºæœ‰åº§å­å’ŒPASS
 
-	// °ÚºÃÆå×ÓÁË, °¤¸ö¸ñ×Ó»­, ÓĞÆå×Ó»­Æå×Ó, Ã»Æå×Ó»­½»²æÏß.
+	// æ‘†å¥½æ£‹å­äº†, æŒ¨ä¸ªæ ¼å­ç”», æœ‰æ£‹å­ç”»æ£‹å­, æ²¡æ£‹å­ç”»äº¤å‰çº¿.
 	for(int i=0; i< BS; i++)
 	{
 		for(int j=0; j< BS; j++)
@@ -1029,25 +1029,25 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 		}
 	}
 	
-	// ÏÖÔÚ³õÊ¼»­ÍêÁË, °üÀ¨ÆåÅÌµ×ÎÆ, Íø¸ñÏß, ±êÌâ, ×ø±êºÍ³õÊ¼¾ÖÃæ
+	// ç°åœ¨åˆå§‹ç”»å®Œäº†, åŒ…æ‹¬æ£‹ç›˜åº•çº¹, ç½‘æ ¼çº¿, æ ‡é¢˜, åæ ‡å’Œåˆå§‹å±€é¢
 
 	
-	vector<CxImage *> images; // ¸÷Ö¡µÄÍ¼Æ¬
+	vector<CxImage *> images; // å„å¸§çš„å›¾ç‰‡
 
-	CxImage * image = new CxImage(); // µÚÒ»Ö¡
+	CxImage * image = new CxImage(); // ç¬¬ä¸€å¸§
 	images.push_back(image);
-	image->CreateFromHBITMAP(hBmpBoard); // µÚÒ»Ö¡ÊÇµ×Í¼
-	hBmpBoard = NULL; // ÒÔºó¶¼ÊÇÔöÁ¿»æÖÆ, ²»ÔÙĞèÒªµ×Í¼. TODO: ÕâÀïÊÇ·ñĞèÒªÉ¾µôÎ»Í¼¾ä±ú? 
-	image->SetFrameDelay(100); // µÚÒ»Ö¡¹Ì¶¨ÑÓ³Ù100. TODO: ÊÇ·ñÓ¦¸Ã¿ÉÒÔÉèÖÃ?
+	image->CreateFromHBITMAP(hBmpBoard); // ç¬¬ä¸€å¸§æ˜¯åº•å›¾
+	hBmpBoard = NULL; // ä»¥åéƒ½æ˜¯å¢é‡ç»˜åˆ¶, ä¸å†éœ€è¦åº•å›¾. TODO: è¿™é‡Œæ˜¯å¦éœ€è¦åˆ æ‰ä½å›¾å¥æŸ„? 
+	image->SetFrameDelay(100); // ç¬¬ä¸€å¸§å›ºå®šå»¶è¿Ÿ100. TODO: æ˜¯å¦åº”è¯¥å¯ä»¥è®¾ç½®?
 	image = NULL;
 
-	// ¿ªÊ¼»­ÆäËû¶¯»­Ö¡ÁË, »­µ½lastNumÊÖÎªÖ¹.
+	// å¼€å§‹ç”»å…¶ä»–åŠ¨ç”»å¸§äº†, ç”»åˆ°lastNumæ‰‹ä¸ºæ­¢.
 	for(int i=firstMoveIndex; i<game.moveCount && num < lastNum; i++)
 	{
-		// Ëã·¨ÊÇºÜ¼òµ¥µÄ, ¶Ô±ÈÕâÒ»Ö¡Ç°ºóµÄÆåÅÌ, °Ñ±äÁËµÄ¸ñ×Ó»­µ½Í¼Æ¬Àï, ÌùÉÏÈ¥
-		memcpy(preBoard, board, sizeof(board)); // ÏÈ¼Ç×¡ÕâÒ»Ö¡Ç°µÄÆåÅÌ
+		// ç®—æ³•æ˜¯å¾ˆç®€å•çš„, å¯¹æ¯”è¿™ä¸€å¸§å‰åçš„æ£‹ç›˜, æŠŠå˜äº†çš„æ ¼å­ç”»åˆ°å›¾ç‰‡é‡Œ, è´´ä¸Šå»
+		memcpy(preBoard, board, sizeof(board)); // å…ˆè®°ä½è¿™ä¸€å¸§å‰çš„æ£‹ç›˜
 
-		// Âä×Ó
+		// è½å­
 		Move & m = game.moves[i]; 
 		m.addition = false;
 		bool put = PutStone(game.gameType, BS, board, m);
@@ -1057,11 +1057,11 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 			num_to_index.push_back(i);
 		}
 		
-		// ¼ì²âÆåÅÌ±ä»¯, ×¢Òâ¿ÉÄÜÓĞÌá×Ó, ËùÒÔ±ä»¯µÄµã¿ÉÄÜÊÇ¶à¸ö.
-		// ÎÒÃÇ°Ñ¸÷¸öµãµÄ±ä»¯·Ö¿ª, Ã¿¸ö±ä»¯ÊÇÒ»¸öĞ¡ÌùÍ¼.
-		// ÕâÑùµÄºÃ´¦ÊÇÈİÒ×´¦Àí, Éú³ÉÍ¼Æ¬³ß´çÒ²½ÏĞ¡.
-		// È±µãÒ²¾ÍÊÇÒ»Ö±±»Ú¸²¡µÄ, Ìá¶à×Ó»á´òÂÒ½Ú×à.
-		// Ò²ĞíÒÔºó¿ÉÒÔ¼ÓÒ»¸öÑ¡Ïî, Ö§³Ö¶à¸ö±ä»¯µãºÏ²¢...
+		// æ£€æµ‹æ£‹ç›˜å˜åŒ–, æ³¨æ„å¯èƒ½æœ‰æå­, æ‰€ä»¥å˜åŒ–çš„ç‚¹å¯èƒ½æ˜¯å¤šä¸ª.
+		// æˆ‘ä»¬æŠŠå„ä¸ªç‚¹çš„å˜åŒ–åˆ†å¼€, æ¯ä¸ªå˜åŒ–æ˜¯ä¸€ä¸ªå°è´´å›¾.
+		// è¿™æ ·çš„å¥½å¤„æ˜¯å®¹æ˜“å¤„ç†, ç”Ÿæˆå›¾ç‰‡å°ºå¯¸ä¹Ÿè¾ƒå°.
+		// ç¼ºç‚¹ä¹Ÿå°±æ˜¯ä¸€ç›´è¢«è¯Ÿç—…çš„, æå¤šå­ä¼šæ‰“ä¹±èŠ‚å¥.
+		// ä¹Ÿè®¸ä»¥åå¯ä»¥åŠ ä¸€ä¸ªé€‰é¡¹, æ”¯æŒå¤šä¸ªå˜åŒ–ç‚¹åˆå¹¶...
 
 		vector<Cross> changes;
 		for(int i=0; i<BS; i++)
@@ -1073,7 +1073,7 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 					Cross pt = {i, j};
 					if(preBoard[i][j] == None)
 					{
-						// Âä×Ó·ÅÔÚ×îÇ°Ãæ, ÏÔÊ¾µÄĞ§¹ûÊÇÏÈÂä×ÓºóÌá×Ó
+						// è½å­æ”¾åœ¨æœ€å‰é¢, æ˜¾ç¤ºçš„æ•ˆæœæ˜¯å…ˆè½å­åæå­
 						changes.insert(changes.begin(), pt);
 					}
 					else
@@ -1096,49 +1096,49 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 
 			if(first && g_options.numbers > 0 &&  num - g_options.numbers > 0)
 			{
-				// µÚÒ»¸ö±ä»¯ÊÇÂä×Ó, ĞèÒª¸üĞÂÊÖÊıÏÔÊ¾, ÕâÀïÏÈ°Ñ¹ıÆÚµÄÊÖÊıÉ¾µô
+				// ç¬¬ä¸€ä¸ªå˜åŒ–æ˜¯è½å­, éœ€è¦æ›´æ–°æ‰‹æ•°æ˜¾ç¤º, è¿™é‡Œå…ˆæŠŠè¿‡æœŸçš„æ‰‹æ•°åˆ æ‰
 				int removeNumber = num - g_options.numbers; 
 				int removeIndex = num_to_index[removeNumber];
 				Move & rm = game.moves[removeIndex];
 
-				// °ÑhBmpCellÑ¡Îªµ±Ç°Î»Í¼, ÔÚÉÏÃæ»­ÏûµôÊÖÊıµÄ¸ñ×Ó
+				// æŠŠhBmpCellé€‰ä¸ºå½“å‰ä½å›¾, åœ¨ä¸Šé¢ç”»æ¶ˆæ‰æ‰‹æ•°çš„æ ¼å­
 				hOldBmp = (HBITMAP)::SelectObject(hDC, hBmpCell);	
 				DrawBoardBG(hDC, rect);
 				DrawCell(hDC, BS, board[rm.x][rm.y], rm.x, rm.y, 0, 0, 0);
 				::SelectObject(hDC, hOldBmp);
 
-				// ×÷Îª¶¯»­ÌùÉÏÈ¥
+				// ä½œä¸ºåŠ¨ç”»è´´ä¸Šå»
 				image = new CxImage();
 				image->CreateFromHBITMAP(hBmpCell);
 				image->SetOffset(BOARD_LEFT + rm.x * CW(), BOARD_TOP + rm.y * CW());
-				image->SetFrameDelay(0); // ÀíÂÛÉÏÑÓ³ÙÊÇ0, µ«Êµ¼Ê×ÜÊÇÓĞÒ»¸öºÜĞ¡µÄÑÓ³Ù
+				image->SetFrameDelay(0); // ç†è®ºä¸Šå»¶è¿Ÿæ˜¯0, ä½†å®é™…æ€»æ˜¯æœ‰ä¸€ä¸ªå¾ˆå°çš„å»¶è¿Ÿ
 				images.push_back(image);
 
 			}
 			
-			// °ÑhBmpCellÑ¡Îªµ±Ç°Î»Í¼, ÔÚÉÏÃæ»­±ä»¯µÄ¸ñ×Ó
+			// æŠŠhBmpCellé€‰ä¸ºå½“å‰ä½å›¾, åœ¨ä¸Šé¢ç”»å˜åŒ–çš„æ ¼å­
 			hOldBmp = (HBITMAP)::SelectObject(hDC, hBmpCell);	
 			DrawBoardBG(hDC, rect);
 			::SelectObject(hDC, hNumFont);
 			DrawCell(hDC, BS, board[i][j], i, j, 0, 0, m.addition || g_options.numbers <= 0 ? 0 : num);
 			::SelectObject(hDC, hOldBmp);
 
-			// ×÷Îª¶¯»­ÌùÉÏÈ¥
+			// ä½œä¸ºåŠ¨ç”»è´´ä¸Šå»
 			image = new CxImage();
 			image->CreateFromHBITMAP(hBmpCell);
 			image->SetOffset(BOARD_LEFT + i * CW(), BOARD_TOP + j * CW());
-			image->SetFrameDelay(0); // ÀíÂÛÉÏÑÓ³ÙÊÇ0, µ«Êµ¼Ê×ÜÊÇÓĞÒ»¸öºÜĞ¡µÄÑÓ³Ù
+			image->SetFrameDelay(0); // ç†è®ºä¸Šå»¶è¿Ÿæ˜¯0, ä½†å®é™…æ€»æ˜¯æœ‰ä¸€ä¸ªå¾ˆå°çš„å»¶è¿Ÿ
 			images.push_back(image);
 
 			if(first)
 			{
 				if(num == firstNum)
 				{
-					prevImage->SetFrameDelay(150); // µÚÒ»ÊÖÑÓ³Ù¹Ì¶¨150(ÎªÉ¶Ç°ÃæÊÇ100?) TODO: ÊÇ·ñÓ¦¸Ã¿ÉÒÔÉèÖÃ?
+					prevImage->SetFrameDelay(150); // ç¬¬ä¸€æ‰‹å»¶è¿Ÿå›ºå®š150(ä¸ºå•¥å‰é¢æ˜¯100?) TODO: æ˜¯å¦åº”è¯¥å¯ä»¥è®¾ç½®?
 				}
 				else
 				{
-					prevImage->SetFrameDelay(g_options.delay); // ÆäËûµÄÑÓ³Ù°´ÓÃ»§ÉèÖÃµÄ×ß
+					prevImage->SetFrameDelay(g_options.delay); // å…¶ä»–çš„å»¶è¿ŸæŒ‰ç”¨æˆ·è®¾ç½®çš„èµ°
 				}
 
 				first = false;
@@ -1146,30 +1146,30 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 		}
 	}
 
-	// ×îºóÒ»Ö¡ÑÓ³Ù³¤Ò»µã, 400, È»ºóÔÙ´ÓµÚÒ»Ö¡¿ªÊ¼²¥·Å
+	// æœ€åä¸€å¸§å»¶è¿Ÿé•¿ä¸€ç‚¹, 400, ç„¶åå†ä»ç¬¬ä¸€å¸§å¼€å§‹æ’­æ”¾
 	images.back()->SetFrameDelay(400);
 
-	// ÑÕÉ«Á¿»¯, Èç¹û²»ÓÃ²»Á¿»¯, ÄÇ¾ÍÊÇÄ¬ÈÏµ÷É«°å+¶¶¶¯, Ğ§¹ûºÜ²î.
-	// TODO: ÎÒÃÇÊÇ°´ËùÓĞÍ¼Æ¬À´Á¿»¯, ÕâÑùµÄ»°ÓĞĞ©ÔªËØ»áÁ¿»¯¶à´Î, ÀıÈçÊı×Ö0.
-	//       ²»ÖªµÀÕâÑù×öÓĞÃ»ÓĞÎÊÌâ, ÊÇ·ñÓ¦¸ÃÁí»­Ò»ÕÅµäĞÍÍ¼ÀıÀ´Á¿»¯? 
+	// é¢œè‰²é‡åŒ–, å¦‚æœä¸ç”¨ä¸é‡åŒ–, é‚£å°±æ˜¯é»˜è®¤è°ƒè‰²æ¿+æŠ–åŠ¨, æ•ˆæœå¾ˆå·®.
+	// TODO: æˆ‘ä»¬æ˜¯æŒ‰æ‰€æœ‰å›¾ç‰‡æ¥é‡åŒ–, è¿™æ ·çš„è¯æœ‰äº›å…ƒç´ ä¼šé‡åŒ–å¤šæ¬¡, ä¾‹å¦‚æ•°å­—0.
+	//       ä¸çŸ¥é“è¿™æ ·åšæœ‰æ²¡æœ‰é—®é¢˜, æ˜¯å¦åº”è¯¥å¦ç”»ä¸€å¼ å…¸å‹å›¾ä¾‹æ¥é‡åŒ–? 
 	CQuantizer q(256, 8); 
     for(int i=0; i<images.size(); i++)
 	{
 		q.ProcessImage(images[i]->GetDIB()); 
 	}
      
-	// °´Á¿»¯µÄ½á¹ûÉú³Éµ÷É«°æ
+	// æŒ‰é‡åŒ–çš„ç»“æœç”Ÿæˆè°ƒè‰²ç‰ˆ
     RGBQUAD* ppal=(RGBQUAD*)calloc(256 *sizeof(RGBQUAD),1); 
     q.SetColorTable(ppal); 
 
 
 	for(int i=0; i<images.size(); i++)
 	{
-		// ÔÚ¸÷Ö¡ÉÏÓ¦ÓÃµ÷É«°å
+		// åœ¨å„å¸§ä¸Šåº”ç”¨è°ƒè‰²æ¿
 		images[i]->DecreaseBpp(8, true, ppal, 256);
 	}
 	
-	// ±£´æ³ÉGIFÎÄ¼ş
+	// ä¿å­˜æˆGIFæ–‡ä»¶
 	CxIOFile cxIOFile;
 	cxIOFile.Open(dstPath.c_str(), _T("wb"));
 	CxImageGIF multiimage;
@@ -1192,13 +1192,13 @@ bool Convert(Game & game, const string & dstPath, int firstNum, int lastNum)
 	::DeleteObject(hTitleFont);
 	::DeleteObject(hMonoFont);
 	::DeleteObject(hBmpCell);
-	::DeleteObject(hBmpBoard); // TODO: Ö®Ç°²»ÊÇ°ÑhBmpBoardÉèÎªNULLÁËÂğ?
+	::DeleteObject(hBmpBoard); // TODO: ä¹‹å‰ä¸æ˜¯æŠŠhBmpBoardè®¾ä¸ºNULLäº†å—?
 	::DeleteObject(hBgBrush);
 	::DeleteDC(hDC);
 	return true;
 }
 
-// °´ÕÕÅäÖÃ, °ÑÆåÆ××ª³ÉÒ»¸ö»ò¶à¸öGIF
+// æŒ‰ç…§é…ç½®, æŠŠæ£‹è°±è½¬æˆä¸€ä¸ªæˆ–å¤šä¸ªGIF
 bool Convert(const string & srcPath)
 {
 	Game game;
@@ -1259,7 +1259,7 @@ bool Convert(const string & srcPath)
 }
 
 
-// ÅäÖÃ¶Ô»°¿ò, ÓÃµÄÊÇÉÏ¸öÊÀ¼ÍµÄ¹ÅÀÏ¼¼Êõ
+// é…ç½®å¯¹è¯æ¡†, ç”¨çš„æ˜¯ä¸Šä¸ªä¸–çºªçš„å¤è€æŠ€æœ¯
 HWND hWndEditDelay    = NULL;
 HWND hWndEditNumbers  = NULL;
 HWND hWndEditSplit    = NULL;

@@ -1,25 +1,21 @@
 # SGF2GIF
-Project SGF2GIF is a small tool to convert *.SGF (for Go Progarm) to GIF image
+Project SGF2GIF is a small tool to convert *.SGF ([Smart Game Format](https://en.wikipedia.org/wiki/Smart_Game_Format) for Go programs) to animated GIF images.
 
-This program is written in Visual C++ and can be compiled and linked in the Microsoft Visual Studio IDEs
+This program is written in C++ using the Microsoft Windows API.  It can be compiled and linked in the Microsoft Visual Studio IDEs.  If attempting to cross-compile on Unix for WINE with `i686-w64-mingw32-g++` you will need the file `res/resource.h` (this file is not currently included in the repository, so you'll probably need VC++ to generate it).
 
-How to run this program:
+## How to run this program
 
-1. In the Windows Explorer program, simply by dragging a SGF file and dropping it on the compiled sgf2gif.exe
-program, and the corresponding GIF file for the SGF file will be generated automatically.
+* In Windows Explorer, drag an `SGF` file and drop it on the compiled `sgf2gif.exe`, and the corresponding `GIF` file will be generated.
 
-On the other hand, you may run the sgf2gif.exe directly and choose the GIF file later.
+* Alternatively, you may run `sgf2gif.exe` directly and choose the input and output files.
 
-The parameters in the option window:
+## Parameters in the options window
 
-Playing Speed:
-    (1) to input a unsinged integer, the smaller the figure and the faster for playing speed. The default value is 50.
+Playing Speed: an unsigned integer, smaller is faster, default 50
     
-Displaying the number of stones:
-    (2) To input a unsinged integer, which to present the last N plays, and the number can be set to zero.
+Displaying the number of stones: an unsigned integer, show the last `N` plays (can be set to 0)
     
-Cut of the play sequence
-    
-Size of Stone:
-    15 - 50 (pixels)
+Cut of the play sequence: undocumented
+   
+Size of Stone: 15 - 50 (pixels)
  

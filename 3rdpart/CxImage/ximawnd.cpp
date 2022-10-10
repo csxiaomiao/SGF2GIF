@@ -230,7 +230,7 @@ bool CxImage::CreateFromHANDLE(HANDLE hMem)
 		SetYDPI((int32_t)floor(head.biYPelsPerMeter * 254.0 / 10000.0 + 0.5));
 
 		/*//copy the pixels (old way)
-		if((pHead->biCompression != BI_RGB) || (pHead->biBitCount == 32)){ //<Jörgen Alfredsson>
+		if((pHead->biCompression != BI_RGB) || (pHead->biBitCount == 32)){ //<JÃ¶rgen Alfredsson>
 			// BITFIELD case
 			// set the internal header in the dib
 			memcpy(pDib,&head,sizeof(head));
